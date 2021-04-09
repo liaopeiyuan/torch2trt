@@ -503,7 +503,7 @@ def torch2trt(module,
     inputs_in = inputs
 
     # copy inputs to avoid modifications to source data
-    inputs = [tensor.clone()[0:1] for tensor in inputs]  # only run single entry
+    inputs = [tensor.clone() for tensor in inputs]  # only run single entry
 
     logger = trt.Logger(log_level)
     builder = trt.Builder(logger)
@@ -512,7 +512,7 @@ def torch2trt(module,
         inputs = tuple(inputs)
     if not isinstance(inputs, tuple):
         inputs = (inputs,)
-        
+    
     # run once to get num outputs
     outputs = module(*inputs)
     if not isinstance(outputs, tuple) and not isinstance(outputs, list):
